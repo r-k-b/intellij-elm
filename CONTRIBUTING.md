@@ -7,6 +7,9 @@ Recommended reading:
 
 Prefer watching videos? Dillon Kearns and Aaron VonderHaar did a [live stream where they built an intellij-elm feature from scratch](https://www.youtube.com/watch?v=8ihh7HNXlaU) using Test-Driven Development.
 
+If you're on a version of NixOS with flake support, running `nix develop` in the project root should drop you into a shell with the dependencies already set up, where `gradle build` will succeed.
+If it fails to build, try `rm -rf ~/.gradle/`; other tools such as the `gradlew` wrapper may have added unpatched binaries there.
+
 ## The Psi Tree
 
 IntelliJ maintains a bi-directional link between the Elm source text on disk and a parsed syntax tree representation. We define the Elm syntax rules in [ElmParser.bnf](src/main/grammars/ElmParser.bnf), and we use [GrammarKit](https://github.com/JetBrains/Grammar-Kit) to generate a parser from the `.bnf` file. For each public rule in the `.bnf`, there is a corresponding class by the same name with an `Elm` prefix. For instance, the syntax rule `ImportClause ::= IMPORT UpperCaseQID [AsClause] [ExposingList]` corresponds to the [ElmImportClause](src/main/kotlin/org/elm/lang/core/psi/elements/ElmImportClause.kt) class. Normally GrammarKit generates these classes along with the parser, but for this project, we wrote and maintain those classes by hand.  
