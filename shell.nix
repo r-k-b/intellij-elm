@@ -5,7 +5,7 @@
 # by a previous gradle instance run outside of the FHS environment this nix file provides.
 # (that is, if something weird happens, `rm -rf ~/.gradle` and try again)
 
-{ pkgs ? import <nixpkgs> { } }:
+{ pkgs ? import <nixpkgs> { }, gradle2nix }:
 let
   fhs = pkgs.buildFHSUserEnv {
     name = "gradle-env";
@@ -16,6 +16,7 @@ let
         elmPackages.elm-live
         elmPackages.elm-test
         gradle
+        gradle2nix
         kotlin
         jdk
         zlib
